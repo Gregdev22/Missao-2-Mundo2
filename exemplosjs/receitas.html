@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Catálogo de Receitas</title>
+</head>
+<body onload='preencheCatalogo()'>
+    <div id="main" class="container-fluid bg-warning" >
+        <div>
+            <h1>Catálogo de Receitas</h1>
+        </div>
+        <div id="pnlCatalogo" class="d-flex flex-wrap">
+        </div>    
+    </div>
+<script>
+var receitas_json = [
+  {"título":"QUINDIM DE CANECA", 
+  "imagem":"quindim.jpg", 
+  "preparo":"Em uma caneca grande, coloque a glucose, junte o coco ralado e o coco em flocos.\
+                            Coloque junto o leite de coco, o açúcar, o ovo, as gemas e a manteiga.\
+                            Misture tudo muito bem e Leve ao micro-ondas por 4 minutos.\
+                            Desenforme em um prato e finalize com mais coco ralado.", 
+  "ingredientes":["Coco ralado ", "Leite de coco", "Açúcar","Ovos","Manteiga sem sal"]},
+
+  {"título":"MACARRÃO AL LIMONE COM ATUM", 
+  "imagem":"macarrao.jpg", 
+  "preparo":"Cozinhe o macarrão. Em uma frigideira grande em fogo médio, adicione a manteiga, o creme de leite, o suco de limão\
+                                e metade das raspas de limão. Acrescente metade do atum na frigideira. Junte o macarrão, mexa e desligue.\
+                                Sirva as porções individuais.", 
+  "ingredientes":['Atum','Macarrão talharim','Manteiga','Creme de leite']},
+
+  {"título":"SALGADINHO SIMPLES DE AIRFYER", 
+  "imagem":"salgadinhos.jpg", 
+  "preparo":"Em uma tábua, coloque uma fatia de mortadela e por cima duas de queijo.\
+                                Vá intercalando as camadas até o salgadinho ficar mais grossinho . Use um aro e faça cortes \
+                                Passe as camadas cortadas na farinha de trigo e no ovo.\
+                                Coloque na airfryer a 180° por 15 minutos. Sirva com um molho a gosto!", 
+  "ingredientes":['Queijo mussarela','Farinha de trigo','Ovos']}
+] ;
+
+getListaIngredientes = (receita) => {
+    let text = "<ul>";
+    ingredientes = receita.ingredientes;    
+    ingredientes.map((p) => {
+        text+="<li>" + p + "</li>";
+    }); 
+    text += "</ul>";
+    return text;
+}; 
+
+getCard = (receita) => {
+    let card = `
+    <div class="card" style="width: 250px; margin: 5px">
+        <img src="${receita.imagem}" class="card-img-top">
+        <div class="card-body">
+            <h5 class="card-title"> 
+             ${receita.título}            
+            </h5> 
+            <div class="card-text">
+            ${getListaIngredientes(receita)}
+            <hr>
+            ${receita.preparo}
+            </div>        
+        </div>    
+    </div>
+    `
+    return card;
+};
+
+preencheCatalogo = () => {
+    let pnlCatalogo = document.getElementById('pnlCatalogo');
+    let catalogo = "";
+    receitas_json.map((rec) => {
+        catalogo+= getCard(rec);
+    })
+    pnlCatalogo.innerHTML = catalogo;
+};
+              
+</script>
+</body>
+</html>
